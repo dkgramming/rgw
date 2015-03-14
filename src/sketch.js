@@ -13,5 +13,7 @@ function Boid() {
   this.location = createVector();
   this.velocity = createVector();
   this.acceleration = createVector();
-  this.mass = 0;
+  this.mass = 1;
 }
+
+
