@@ -16,4 +16,15 @@ function Boid() {
   this.mass = 1;
 }
 
-
+Boid.prototype = {
+  constructor: Boid,
+  update:function () {
+    // TODO
+  },
+  display:function () { 
+    // TODO
+  },
+  checkEdges:function () { 
+    // TODO
+  }
+}
