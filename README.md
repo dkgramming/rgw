@@ -9,3 +9,8 @@ I’m currently designing an application that will combine Craig Reynold’s ste
 How to run
 ---
 Open `src/index.html` in any modern browser with JavaScript enabled.
+
+References
+---
+* [The Nature of Code](http://natureofcode.com) - Daniel Shiffman
+* [Reynolds Engineering & Design](http://red3d.com/research.html) - Craig Reynolds
