@@ -21,18 +21,13 @@ function draw() {
   // Paint the background white
   background(255);
 
+  var gravity = createVector(0, 0.1);
+
   boids.forEach(function(boid) {
-    var gravity = createVector(0, 0.1);
     boid.applyForce(gravity);
+    boid.update();
+    boid.display();
   });
-
-  boids.forEach(
-    Boid.prototype.update
-  );
-
-  boids.forEach(
-    Boid.prototype.display
-  );
 
 }
 
@@ -48,18 +43,20 @@ function Boid(x_pos, y_pos, mass) {
 
 Boid.prototype = {
   constructor: Boid,
-  update:function (self) {
-    self.velocity.add(self.acceleration);
-    self.position.add(self.velocity);
-    self.acceleration.mult(0);
+  update:function () {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
   },
-  display:function (self) { 
-    ellipse(self.position.x, self.position.y, 80, 80);
+  display:function () { 
+    ellipse(this.position.x, this.position.y, 80, 80);
   },
   checkEdges:function () { 
     // TODO
   },
   applyForce:function (force) {
+    // Force = mass * acceleration
+    // acceleration = Force / mass
     this.acceleration.add(force.copy().div(this.mass));
   }
 }
