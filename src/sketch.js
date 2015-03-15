@@ -8,7 +8,7 @@ function setup() {
   createCanvas(640, 480);
 
   for (var i = 0; i < 10; i++) {
-    boids.push(new Boid(10*i, 10*i, 10));
+    boids.push(new Boid(random(0,width), random(0,height), 10));
   }
 
 }
