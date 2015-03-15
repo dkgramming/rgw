@@ -21,11 +21,12 @@ function draw() {
   // Paint the background white
   background(255);
 
-  var gravity = createVector(0, 0.1);
+  var gravity = createVector(0.1, 0.1);
 
   boids.forEach(function(boid) {
     boid.applyForce(gravity);
     boid.update();
+    boid.checkEdges();
     boid.display();
   });
 
@@ -52,7 +53,10 @@ Boid.prototype = {
     ellipse(this.position.x, this.position.y, 80, 80);
   },
   checkEdges:function () { 
-    // TODO
+    if (this.position.x < 0) { this.position.x = width; }
+    if (this.position.x > width) { this.position.x = 0; }
+    if (this.position.y < 0) { this.position.y = height; }
+    if (this.position.y > height) { this.position.y = 0; }
   },
   applyForce:function (force) {
     // Force = mass * acceleration
