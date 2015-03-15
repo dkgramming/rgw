@@ -1,9 +1,27 @@
+var boids = [];
+
+/**
+ * P5js initialization
+ */
 function setup() {
+
   createCanvas(640, 480);
+
+  for (var i = 0; i < 10; i++) {
+    boids.push(new Boid(10*i, 10*i, 10));
+  }
+
 }
 
+/**
+ * P5js render loop
+ */
 function draw() {
-  ellipse(50, 50, 80, 80);
+
+  boids.forEach(
+    Boid.prototype.display
+  );
+
 }
 
 /**
@@ -21,8 +39,8 @@ Boid.prototype = {
   update:function () {
     // TODO
   },
-  display:function () { 
-    // TODO
+  display:function (self) { 
+    ellipse(self.position.x, self.position.y, 80, 80);
   },
   checkEdges:function () { 
     // TODO
