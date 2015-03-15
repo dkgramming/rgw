@@ -37,7 +37,7 @@ function draw() {
  */
 function Boid(x_pos, y_pos, mass) {
   this.position= createVector(x_pos, y_pos);
-  this.velocity = createVector(0, 0);
+  this.velocity = p5.Vector.random2D();
   this.acceleration = createVector(0, 0);
   this.mass = mass;
 }
