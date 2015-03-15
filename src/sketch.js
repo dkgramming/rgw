@@ -18,6 +18,13 @@ function setup() {
  */
 function draw() {
 
+  // Paint the background white
+  background(255);
+
+  boids.forEach(
+    Boid.prototype.update
+  );
+
   boids.forEach(
     Boid.prototype.display
   );
@@ -29,15 +36,17 @@ function draw() {
  */
 function Boid(x_pos, y_pos, mass) {
   this.position= createVector(x_pos, y_pos);
-  this.velocity = createVector(0, 0);
+  this.velocity = createVector(1, 1);
   this.acceleration = createVector(0, 0);
   this.mass = mass;
 }
 
 Boid.prototype = {
   constructor: Boid,
-  update:function () {
-    // TODO
+  update:function (self) {
+    self.velocity.add(self.acceleration);
+    self.position.add(self.velocity);
+    self.acceleration.mult(0);
   },
   display:function (self) { 
     ellipse(self.position.x, self.position.y, 80, 80);
