@@ -9,11 +9,11 @@ function draw() {
 /**
  * Boid class
  */
-function Boid() {
-  this.location = createVector();
-  this.velocity = createVector();
-  this.acceleration = createVector();
-  this.mass = 1;
+function Boid(x_pos, y_pos, mass) {
+  this.position= createVector(x_pos, y_pos);
+  this.velocity = createVector(0, 0);
+  this.acceleration = createVector(0, 0);
+  this.mass = mass;
 }
 
 Boid.prototype = {
