@@ -60,7 +60,6 @@ Boid.prototype = {
     // TODO
   },
   applyForce:function (force) {
-    console.log(force);
     this.acceleration.add(force.copy().div(this.mass));
   }
 }
