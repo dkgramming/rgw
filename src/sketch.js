@@ -8,7 +8,13 @@ function setup() {
   createCanvas(640, 480);
 
   for (var i = 0; i < 10; i++) {
-    boids.push(new Boid(random(0,width), random(0,height), 10));
+    boids.push(new Boid(
+      random(0,width), 
+      random(0,height), 
+      10,
+      10,
+      10)
+    );
   }
 
 }
@@ -47,7 +53,13 @@ function Boid(x_pos, y_pos, mass, maxSpeed, maxForce) {
 Boid.prototype = {
   constructor: Boid,
   update:function () {
+    // Update velocity using the acceleration vector the current time step
     this.velocity.add(this.acceleration);
+
+    // Clamp the velocity vector
+    if (this.velocity.mag() > this.maxSpeed) { 
+      this.velocity.setMag(this.maxSpeed); 
+    }
     this.position.add(this.velocity);
     this.acceleration.mult(0);
   },
