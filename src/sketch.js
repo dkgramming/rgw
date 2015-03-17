@@ -48,7 +48,9 @@ function Boid(x_pos, y_pos, mass, maxSpeed, maxForce) {
 }
 
 Boid.prototype = {
+
   constructor: Boid,
+
   update:function () {
     // Update velocity using the acceleration vector the current time step
     this.velocity.add(this.acceleration);
@@ -60,18 +62,22 @@ Boid.prototype = {
     this.position.add(this.velocity);
     this.acceleration.mult(0);
   },
+
   display:function () { 
     ellipse(this.position.x, this.position.y, 80, 80);
   },
+
   checkEdges:function () { 
     if (this.position.x < 0) { this.position.x = width; }
     if (this.position.x > width) { this.position.x = 0; }
     if (this.position.y < 0) { this.position.y = height; }
     if (this.position.y > height) { this.position.y = 0; }
   },
+
   applyForce:function (force) {
     // Force = mass * acceleration
     // acceleration = Force / mass
     this.acceleration.add(force.copy().div(this.mass));
   }
+
 }
