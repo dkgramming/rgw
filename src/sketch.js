@@ -35,11 +35,13 @@ function draw() {
 /**
  * Boid class
  */
-function Boid(x_pos, y_pos, mass) {
+function Boid(x_pos, y_pos, mass, maxSpeed, maxForce) {
   this.position= createVector(x_pos, y_pos);
   this.velocity = p5.Vector.random2D();
   this.acceleration = createVector(0, 0);
   this.mass = mass;
+  this.maxSpeed = maxSpeed;
+  this.maxForce = maxForce;
 }
 
 Boid.prototype = {
