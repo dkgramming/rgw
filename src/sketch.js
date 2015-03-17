@@ -27,10 +27,7 @@ function draw() {
   // Paint the background white
   background(255);
 
-  var gravity = createVector(0.1, 0.1);
-
   boids.forEach(function(boid) {
-    boid.applyForce(gravity);
     boid.update();
     boid.checkEdges();
     boid.display();
