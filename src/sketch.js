@@ -28,6 +28,7 @@ function draw() {
   background(255);
 
   boids.forEach(function(boid) {
+    boid.separate(boids, 100);
     boid.update();
     boid.checkEdges();
     boid.display();
@@ -78,6 +79,30 @@ Boid.prototype = {
     // Force = mass * acceleration
     // acceleration = Force / mass
     this.acceleration.add(force.copy().div(this.mass));
+  },
+
+  separate:function (otherBoids, safeDistance) {
+    var sum = createVector();
+    var count = 0;
+    var pos = this.position;
+     
+    otherBoids.filter(function(other) {
+      var distance = pos.dist(other.position)
+      return distance > 0 && distance < safeDistance;
+    }).forEach(function(tooClose) {
+      var diff = p5.Vector.sub(pos, tooClose.position);
+      diff.normalize();
+      sum.add(diff);
+      count += 1;
+    });
+
+    if (count > 0) { 
+      sum.div(count); 
+      sum.setMag(this.maxSpeed);
+      var steer = p5.Vector.sub(sum,this.velocity);
+      steer.limit(this.maxForce);
+      this.applyForce(steer);
+    }
   }
 
 }
