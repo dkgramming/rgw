@@ -1,4 +1,5 @@
 var boids = [];
+var NUM_BOIDS = 3;
 
 /**
  * P5js initialization
@@ -7,7 +8,7 @@ function setup() {
 
   createCanvas(640, 480);
 
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < NUM_BOIDS; i++) {
     boids.push(new Boid(
       random(0,width), 
       random(0,height), 
