@@ -12,7 +12,7 @@ function setup() {
     boids.push(new Boid(
       random(0,width), 
       random(0,height), 
-      10,
+      50,
       10,
       10)
     );
@@ -29,7 +29,8 @@ function draw() {
   background(255);
 
   boids.forEach(function(boid) {
-    boid.calcSteeringForces();
+    var steeringForce = boid.calcSteeringForces();
+    boid.applyForce(steeringForce);
     boid.update();
     boid.checkEdges();
     boid.display();
@@ -47,6 +48,10 @@ function Boid(x_pos, y_pos, mass, maxSpeed, maxForce) {
   this.mass = mass;
   this.maxSpeed = maxSpeed;
   this.maxForce = maxForce;
+
+  this.sepWeight = 5.0;
+  this.seekWeight = 0.5;
+  this.wanderWeight = 5.2;
 }
 
 Boid.prototype = {
@@ -77,14 +82,19 @@ Boid.prototype = {
   },
 
   applyForce:function (force) {
+    if (force.mag() > this.maxForce) { force.setMag(this.maxForce); }
+
     // Force = mass * acceleration
     // acceleration = Force / mass
     this.acceleration.add(force.copy().div(this.mass));
   },
 
+  forward:function () {
+    return p5.Vector.add(this.position, this.velocity);
+  },
+
   seek:function (targetVector) {
-    var forwardVector = p5.Vector.add(this.position, this.velocity);
-    return steer = p5.Vector.sub(targetVector, forwardVector);
+    return steer = p5.Vector.sub(targetVector, this.forward());
   },
 
   separate:function (otherBoids, safeDistance) {
@@ -113,14 +123,25 @@ Boid.prototype = {
     return steer;
   },
 
+  wander:function () {
+    var random = p5.Vector.random2D().mult(50).add(this.forward());
+    return this.seek(random);
+  },
+
   calcSteeringForces:function () {
-    var sepWeight = 0.2;
-    var sepForce = this.separate(boids, 100).mult(sepWeight);
-    this.applyForce(sepForce);
+    var steeringForce = createVector();
+
+    var sepForce = this.separate(boids, 200).mult(this.sepWeight);
+    steeringForce.add(sepForce);
     
-    var seekWeight = 0.5;
-    var seekForce = this.seek(createVector(mouseX, mouseY)).mult(seekWeight);
-    this.applyForce(seekForce);
+    var seekForce = this.seek(createVector(mouseX, mouseY))
+                        .mult(this.seekWeight);
+    steeringForce.add(seekForce);
+
+    var wanderForce = this.wander();
+    steeringForce.add(wanderForce);
+    
+    return steeringForce;
   }
 
 }
