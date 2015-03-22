@@ -29,7 +29,7 @@ function draw() {
   background(255);
 
   boids.forEach(function(boid) {
-    boid.separate(boids, 100);
+    boid.calcSteeringForces();
     boid.update();
     boid.checkEdges();
     boid.display();
@@ -86,6 +86,7 @@ Boid.prototype = {
     var sum = createVector();
     var count = 0;
     var pos = this.position;
+    var steer = createVector();
      
     otherBoids.filter(function(other) {
       var distance = pos.dist(other.position)
@@ -100,10 +101,17 @@ Boid.prototype = {
     if (count > 0) { 
       sum.div(count); 
       sum.setMag(this.maxSpeed);
-      var steer = p5.Vector.sub(sum,this.velocity);
+      steer = p5.Vector.sub(sum, this.velocity);
       steer.limit(this.maxForce);
-      this.applyForce(steer);
     }
+
+    return steer;
+  },
+
+  calcSteeringForces:function () {
+    var sepWeight = 0.2;
+    var sepForce = this.separate(boids, 100).mult(sepWeight);
+    this.applyForce(sepForce);
   }
 
 }
