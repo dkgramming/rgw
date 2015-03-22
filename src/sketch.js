@@ -82,8 +82,9 @@ Boid.prototype = {
     this.acceleration.add(force.copy().div(this.mass));
   },
 
-  seek:function (target) {
-    
+  seek:function (targetVector) {
+    var forwardVector = p5.Vector.add(this.position, this.velocity);
+    return steer = p5.Vector.sub(targetVector, forwardVector);
   },
 
   separate:function (otherBoids, safeDistance) {
@@ -116,6 +117,10 @@ Boid.prototype = {
     var sepWeight = 0.2;
     var sepForce = this.separate(boids, 100).mult(sepWeight);
     this.applyForce(sepForce);
+    
+    var seekWeight = 0.5;
+    var seekForce = this.seek(createVector(mouseX, mouseY)).mult(seekWeight);
+    this.applyForce(seekForce);
   }
 
 }
