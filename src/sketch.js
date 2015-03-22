@@ -82,6 +82,10 @@ Boid.prototype = {
     this.acceleration.add(force.copy().div(this.mass));
   },
 
+  seek:function (target) {
+    
+  },
+
   separate:function (otherBoids, safeDistance) {
     var sum = createVector();
     var count = 0;
